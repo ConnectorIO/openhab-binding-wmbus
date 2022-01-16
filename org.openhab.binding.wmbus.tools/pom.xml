@@ -11,6 +11,7 @@
 
   <groupId>org.openhab.addons.bundles</groupId>
   <artifactId>org.openhab.binding.wmbus.tools</artifactId>
+  <packaging>bundle</packaging>
 
   <name>WMBus Binding Tools</name>
 
@@ -28,7 +29,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>20.0</version>
+      <version>30.1-jre</version>
       <scope>provided</scope>
     </dependency>
 
