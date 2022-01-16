@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.openhab.addons.bundles</groupId>
     <artifactId>wmbus</artifactId>
-    <version>3.1.0-SNAPSHOT</version>
+    <version>3.2.0-SNAPSHOT</version>
   </parent>
 
   <groupId>org.openhab.addons.bundles</groupId>
@@ -118,9 +118,8 @@
         <configuration>
           <instructions>
             <Import-Package>
-              !org.openhab.binding.wmbus.*,
-              !org.openmuc.jmbus*,
-              !org.openmuc.jrxrx*
+              !gnu.io,
+              *
             </Import-Package>
             <Export-Package>
               org.openhab.binding.wmbus.*,

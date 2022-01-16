@@ -5,13 +5,13 @@
 
   <groupId>org.openhab.addons.bundles</groupId>
   <artifactId>wmbus</artifactId>
-  <version>3.1.0-SNAPSHOT</version>
+  <version>3.2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>WMBus Binding Aggregator</name>
 
   <properties>
-    <openhab.version>3.1.0</openhab.version>
+    <openhab.version>3.2.0</openhab.version>
   </properties>
 
   <modules>
@@ -80,6 +80,21 @@
   </dependencyManagement>
 
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <version>4.2.1</version>
+          <extensions>true</extensions>
+          <configuration>
+            <instructions combine.children="override">
+              <_nouses>true</_nouses>
+            </instructions>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -93,8 +108,6 @@
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
-        <version>5.1.4</version>
-        <extensions>true</extensions>
       </plugin>
     </plugins>
   </build>
