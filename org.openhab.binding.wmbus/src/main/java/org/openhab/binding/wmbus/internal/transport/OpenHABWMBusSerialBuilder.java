@@ -28,6 +28,7 @@ public class OpenHABWMBusSerialBuilder extends WMBusSerialBuilder {
     super(wmBusManufacturer, listener, serialPortName);
 
     this.serialPortProvider = serialPortProvider;
+    this.serialPortName = serialPortName;
   }
 
   @Override

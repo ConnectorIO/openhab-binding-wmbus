@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
  *
  * @author Łukasz Dywicki - Initial contribution.
  */
-@Component(property = { "composite=true" })
+@Component(property = { "composite=true" }, immediate = true)
 public class CompositeUnitRegistry implements UnitRegistry {
 
     private final Set<UnitRegistry> registers = new LinkedHashSet<>();
