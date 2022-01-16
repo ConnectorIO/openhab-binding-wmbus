@@ -21,6 +21,7 @@ import org.openhab.binding.wmbus.discovery.CompositeMessageListener;
 import org.openhab.binding.wmbus.handler.VirtualWMBusBridgeHandler;
 import org.openhab.binding.wmbus.handler.WMBusBridgeHandler;
 import org.openhab.binding.wmbus.handler.WMBusMessageListener;
+import org.openhab.core.io.transport.serial.SerialPortManager;
 import org.openhab.core.thing.Bridge;
 import org.openhab.core.thing.Thing;
 import org.openhab.core.thing.ThingTypeUID;
@@ -52,12 +53,15 @@ public class WMBusHandlerFactory extends BaseThingHandlerFactory {
     private final Logger logger = LoggerFactory.getLogger(WMBusHandlerFactory.class);
 
     private final CompositeMessageListener messageListener = new CompositeMessageListener();
+    private final SerialPortManager serialPortManager;
 
     private KeyStorage keyStorage;
     private UnitRegistry unitRegistry;
     private WMBusChannelTypeProvider channelTypeProvider;
 
-    public WMBusHandlerFactory() {
+    @Activate
+    public WMBusHandlerFactory(@Reference SerialPortManager serialPortManager) {
+        this.serialPortManager = serialPortManager;
         logger.debug("wmbus handler factory is starting up.");
     }
 
@@ -73,7 +77,7 @@ public class WMBusHandlerFactory extends BaseThingHandlerFactory {
         if (thing instanceof Bridge) {
             if (thingTypeUID.equals(WMBusBindingConstants.THING_TYPE_BRIDGE)) {
                 logger.debug("Creating handler for WMBus bridge.");
-                WMBusBridgeHandler handler = new WMBusBridgeHandler((Bridge) thing, keyStorage);
+                WMBusBridgeHandler handler = new WMBusBridgeHandler((Bridge) thing, keyStorage, serialPortManager);
                 handler.registerWMBusMessageListener(messageListener);
                 return handler;
             } else if (thingTypeUID.equals(WMBusBindingConstants.THING_TYPE_VIRTUAL_BRIDGE)) {

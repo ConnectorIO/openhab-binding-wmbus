@@ -25,7 +25,9 @@ import java.util.concurrent.TimeUnit;
 import org.openhab.binding.wmbus.config.StickModel;
 import org.openhab.binding.wmbus.config.WMBusSerialBridgeConfig;
 import org.openhab.binding.wmbus.internal.WMBusReceiver;
+import org.openhab.binding.wmbus.internal.transport.OpenHABWMBusSerialBuilder;
 import org.openhab.core.config.core.status.ConfigStatusMessage;
+import org.openhab.core.io.transport.serial.SerialPortManager;
 import org.openhab.core.thing.Bridge;
 import org.openhab.core.thing.ThingStatus;
 import org.openhab.core.thing.ThingStatusDetail;
@@ -44,11 +46,13 @@ import org.openmuc.jmbus.wireless.WMBusMode;
 
 public class WMBusBridgeHandler extends WMBusBridgeHandlerBase {
 
+    private final SerialPortManager serialPortManager;
     private ScheduledFuture<?> initFuture;
     private WMBusConnection wmbusConnection;
 
-    public WMBusBridgeHandler(Bridge bridge, KeyStorage keyStorage) {
+    public WMBusBridgeHandler(Bridge bridge, KeyStorage keyStorage, SerialPortManager serialPortManager) {
         super(bridge, keyStorage);
+        this.serialPortManager = serialPortManager;
     }
 
     @Override
@@ -115,7 +119,7 @@ public class WMBusBridgeHandler extends WMBusBridgeHandlerBase {
                     wmbusReceiver.setFilterIDs(config.getDeviceIDFilter());
                 }
 
-                WMBusSerialBuilder connectionBuilder = new WMBusSerialBuilder(wmBusManufacturer, wmbusReceiver,
+                WMBusSerialBuilder connectionBuilder = new OpenHABWMBusSerialBuilder(serialPortManager, wmBusManufacturer, wmbusReceiver,
                         interfaceName);
 
                 logger.debug("Setting WMBus radio mode to {}", radioMode.toString());
