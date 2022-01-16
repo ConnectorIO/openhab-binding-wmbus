@@ -3,13 +3,6 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.openhab.addons.bundles</groupId>
-    <artifactId>org.openhab.addons.reactor.bundles</artifactId>
-    <version>3.1.0-SNAPSHOT</version>
-    <relativePath></relativePath>
-  </parent>
-
   <groupId>org.openhab.addons.bundles</groupId>
   <artifactId>wmbus</artifactId>
   <version>3.1.0-SNAPSHOT</version>
@@ -17,61 +10,94 @@
 
   <name>WMBus Binding Aggregator</name>
 
+  <properties>
+    <openhab.version>3.1.0</openhab.version>
+  </properties>
+
   <modules>
     <module>org.openhab.binding.wmbus</module>
     <module>org.openhab.binding.wmbus.tools</module>
   </modules>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.openhab.core.bundles</groupId>
+        <artifactId>org.openhab.core</artifactId>
+        <version>${openhab.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openhab.core.bundles</groupId>
+        <artifactId>org.openhab.core.config.discovery</artifactId>
+        <version>${openhab.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openhab.core.bundles</groupId>
+        <artifactId>org.openhab.core.io.transport.serial</artifactId>
+        <version>${openhab.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openhab.core.bundles</groupId>
+        <artifactId>org.openhab.core.thing</artifactId>
+        <version>${openhab.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.osgi</groupId>
+        <artifactId>org.osgi.service.component.annotations</artifactId>
+        <version>1.4.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openmuc</groupId>
+        <artifactId>jmbus</artifactId>
+        <version>3.2.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.23</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.jdt</groupId>
+        <artifactId>org.eclipse.jdt.annotation</artifactId>
+        <version>2.1.0</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.openhab.core.bom</groupId>
+        <artifactId>org.openhab.core.bom.compile</artifactId>
+        <version>${openhab.version}</version>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.openhab.core.bom</groupId>
+        <artifactId>org.openhab.core.bom.openhab-core</artifactId>
+        <version>${openhab.version}</version>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <build>
     <plugins>
       <plugin>
-        <groupId>org.commonjava.maven.plugins</groupId>
-        <artifactId>directory-maven-plugin</artifactId>
-        <version>0.3.1</version>
-        <executions>
-          <execution>
-            <id>directories</id>
-            <phase>none</phase>
-            <goals>
-              <goal>directory-of</goal>
-            </goals>
-            <configuration>
-              <property>basedirRoot</property>
-              <project>
-                <groupId>org.openhab.addons.bundles</groupId>
-                <artifactId>org.openhab.addons.reactor.bundles</artifactId>
-              </project>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
         <configuration>
-          <archive>
-            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
-          </archive>
-          <skipIfEmpty>true</skipIfEmpty>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>biz.aQute.bnd</groupId>
-        <artifactId>bnd-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
+
+  <repositories>
+    <repository>
+      <id>openhab</id>
+      <url>https://openhab.jfrog.io/openhab/libs-release/</url>
+    </repository>
+  </repositories>
 
 </project>
